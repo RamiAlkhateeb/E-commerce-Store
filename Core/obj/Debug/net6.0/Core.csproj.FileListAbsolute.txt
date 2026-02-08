@@ -10,3 +10,16 @@ C:\Work\NetStore\Core\obj\Debug\net6.0\Core.dll
 C:\Work\NetStore\Core\obj\Debug\net6.0\refint\Core.dll
 C:\Work\NetStore\Core\obj\Debug\net6.0\Core.pdb
 C:\Work\NetStore\Core\obj\Debug\net6.0\ref\Core.dll
+D:\Work\E-commerce-Store\Core\bin\Debug\net6.0\Core.deps.json
+D:\Work\E-commerce-Store\Core\bin\Debug\net6.0\Core.dll
+D:\Work\E-commerce-Store\Core\bin\Debug\net6.0\Core.pdb
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.csproj.AssemblyReference.cache
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.AssemblyInfoInputs.cache
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.AssemblyInfo.cs
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.csproj.CoreCompileInputs.cache
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.sourcelink.json
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.dll
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\refint\Core.dll
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\Core.pdb
+D:\Work\E-commerce-Store\Core\obj\Debug\net6.0\ref\Core.dll
