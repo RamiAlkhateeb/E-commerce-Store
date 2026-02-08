@@ -4,9 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Order } from 'src/app/shared/models/order';
 
 @Component({
-  selector: 'app-order-detailed',
-  templateUrl: './order-detailed.component.html',
-  styleUrls: ['./order-detailed.component.scss']
+    selector: 'app-order-detailed',
+    templateUrl: './order-detailed.component.html',
+    styleUrls: ['./order-detailed.component.scss'],
+    standalone: false
 })
 export class OrderDetailedComponent implements OnInit{
 
