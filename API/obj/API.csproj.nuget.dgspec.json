@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Work\\NetStore\\API\\API.csproj": {}
+    "D:\\Work\\E-commerce-Store\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Work\\NetStore\\API\\API.csproj": {
+    "D:\\Work\\E-commerce-Store\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\NetStore\\API\\API.csproj",
+        "projectUniqueName": "D:\\Work\\E-commerce-Store\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Work\\NetStore\\API\\API.csproj",
-        "packagesPath": "C:\\Users\\rami.alkhateeb\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\NetStore\\API\\obj\\",
+        "projectPath": "D:\\Work\\E-commerce-Store\\API\\API.csproj",
+        "packagesPath": "C:\\Users\\rami_\\.nuget\\packages\\",
+        "outputPath": "D:\\Work\\E-commerce-Store\\API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\rami.alkhateeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rami_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -28,11 +32,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Work\\NetStore\\Core\\Core.csproj": {
-                "projectPath": "C:\\Work\\NetStore\\Core\\Core.csproj"
+              "D:\\Work\\E-commerce-Store\\Core\\Core.csproj": {
+                "projectPath": "D:\\Work\\E-commerce-Store\\Core\\Core.csproj"
               },
-              "C:\\Work\\NetStore\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Work\\NetStore\\Infrastructure\\Infrastructure.csproj"
+              "D:\\Work\\E-commerce-Store\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "D:\\Work\\E-commerce-Store\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -41,7 +45,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net6.0": {
@@ -77,6 +87,24 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.AspNetCore.App": {
               "privateAssets": "none"
@@ -85,21 +113,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Work\\NetStore\\Core\\Core.csproj": {
+    "D:\\Work\\E-commerce-Store\\Core\\Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\NetStore\\Core\\Core.csproj",
+        "projectUniqueName": "D:\\Work\\E-commerce-Store\\Core\\Core.csproj",
         "projectName": "Core",
-        "projectPath": "C:\\Work\\NetStore\\Core\\Core.csproj",
-        "packagesPath": "C:\\Users\\rami.alkhateeb\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\NetStore\\Core\\obj\\",
+        "projectPath": "D:\\Work\\E-commerce-Store\\Core\\Core.csproj",
+        "packagesPath": "C:\\Users\\rami_\\.nuget\\packages\\",
+        "outputPath": "D:\\Work\\E-commerce-Store\\Core\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\rami.alkhateeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rami_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -119,7 +151,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net6.0": {
@@ -145,26 +183,44 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Work\\NetStore\\Infrastructure\\Infrastructure.csproj": {
+    "D:\\Work\\E-commerce-Store\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Work\\NetStore\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "D:\\Work\\E-commerce-Store\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Work\\NetStore\\Infrastructure\\Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\rami.alkhateeb\\.nuget\\packages\\",
-        "outputPath": "C:\\Work\\NetStore\\Infrastructure\\obj\\",
+        "projectPath": "D:\\Work\\E-commerce-Store\\Infrastructure\\Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\rami_\\.nuget\\packages\\",
+        "outputPath": "D:\\Work\\E-commerce-Store\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\rami.alkhateeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\rami_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -178,8 +234,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Work\\NetStore\\Core\\Core.csproj": {
-                "projectPath": "C:\\Work\\NetStore\\Core\\Core.csproj"
+              "D:\\Work\\E-commerce-Store\\Core\\Core.csproj": {
+                "projectPath": "D:\\Work\\E-commerce-Store\\Core\\Core.csproj"
               }
             }
           }
@@ -188,7 +244,13 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net6.0": {
@@ -240,12 +302,26 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[6.0.36, 6.0.36]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
