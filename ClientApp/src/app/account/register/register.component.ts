@@ -5,9 +5,10 @@ import { debounceTime, finalize, map, switchMap, take } from 'rxjs';
 import { AccountService } from '../account.service';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.scss'],
+    standalone: false
 })
 export class RegisterComponent {
 
