@@ -11,9 +11,10 @@ import { firstValueFrom } from 'rxjs';
 import { OrderToCreate } from 'src/app/shared/models/order';
 
 @Component({
-  selector: 'app-checkout-payment',
-  templateUrl: './checkout-payment.component.html',
-  styleUrls: ['./checkout-payment.component.scss']
+    selector: 'app-checkout-payment',
+    templateUrl: './checkout-payment.component.html',
+    styleUrls: ['./checkout-payment.component.scss'],
+    standalone: false
 })
 export class CheckoutPaymentComponent implements OnInit {
   @Input() checkoutForm?: FormGroup
