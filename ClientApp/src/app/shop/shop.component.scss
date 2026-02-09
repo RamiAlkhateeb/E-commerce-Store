@@ -1,16 +1,24 @@
-.list-group-item{
-    cursor: pointer;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1.1em;
+.list-group-item {
+  cursor: pointer;
+  border: none; /* Remove borders */
+  background: transparent;
+  padding: 10px 15px;
+  font-weight: 500;
+  transition: all 0.2s;
+  color: #555;
+  border-radius: 8px; /* Smooth corners */
+  margin-bottom: 2px;
 
-    &.active{
-        border-radius: 10px;
-    }
+  &:hover {
+    background-color: #f1f3f5; /* Light gray hover */
+    color: #000;
+    transform: translateX(5px); /* Small slide effect */
+  }
 
-    &:not(.active):hover{
-        color: #fff;
-        background-color: rgba(233,84,32,0.7);
-        border-radius: 10px;
-    }
+  &.active {
+    background-color: #0d6efd; /* Bootstrap Primary Blue */
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 4px 6px rgba(13, 110, 253, 0.3);
+  }
 }

@@ -1,65 +1,74 @@
-<div class="container">
+<div class="container mt-4">
   <div class="row">
-    <section class="col-3">
+    
+    <section class="col-md-3 mb-4 d-none d-md-block">
+      <div class="p-3 bg-light rounded shadow-sm">
+        <h5 class="text-primary fw-bold mb-3">Sort</h5>
+        <select class="form-select mb-4 border-0 shadow-sm" (change)="onSortSelected($event)">
+          @for (sort of sortOptions; track sort.value) {
+            <option [selected]="shopParams.sort === sort.value" [value]="sort.value">
+              {{sort.name}}
+            </option>
+          }
+        </select>
 
-      <h5 class="text-warning ms-3">Sort</h5>
-      <select name="" id="" class="form-select mb-4" (change)="onSortSelected($event)">
-        @for (sort of sortOptions; track sort) {
-          <option
-            [selected]="shopParams.sort === sort.value"
-            [value]="sort.value">
-            {{sort.name}}
-          </option>
-        }
+        <h5 class="text-primary fw-bold">Categories</h5>
+        <ul class="list-group my-3">
+          @for (type of categories; track type) {
+            <li class="list-group-item d-flex justify-content-between align-items-center" 
+                [class.active]="type === shopParams.category"
+                [class.text-white]="type === shopParams.category"
+                (click)="onTypeSelected(type)">
+              {{type}}
+              </li>
+          }
+        </ul>
 
-      </select>
-
-      <h5 class="text-warning ms-3">Types</h5>
-      <ul class="list-group my-3">
-        @for (type of categories; track type) {
-          <li class="list-group-item" [class.active]="type === shopParams.category"
-          [value]="type" (click)="onTypeSelected(type)">{{type}}</li>
-        }
-
-      </ul>
-      <h5 class="text-warning ms-3">Brands</h5>
-      <ul class="list-group my-3">
-        @for (brand of brands; track brand) {
-          <li class="list-group-item" [class.active]="brand === shopParams.brand"
-          [value]="brand" (click)="onBrandSelected(brand)">{{brand}}</li>
-        }
-
-      </ul>
+        <h5 class="text-primary fw-bold">Brands</h5>
+        <ul class="list-group my-3">
+          @for (brand of brands; track brand) {
+            <li class="list-group-item" 
+                [class.active]="brand === shopParams.brand"
+                [class.text-white]="brand === shopParams.brand"
+                (click)="onBrandSelected(brand)">
+              {{brand}}
+            </li>
+          }
+        </ul>
+      </div>
     </section>
-    <section class="col-9">
-      <div class="d-flex justify-content-between align-items-center pb-2">
-        <app-paging-header
-          [totalCount]="totalCount"
-          [pageNumber]="shopParams.pageNumber"
-          [pageSize]="shopParams.pageSize"
-        ></app-paging-header>
-        <div class="d-flex mt-2">
-          <input (keyup.enter)="onSearch()" type="text" placeholder="Search" class="form-control me-2" #search>
-          <button (click)="onSearch()" class="btn btn-outline-primary mx-2">Search</button>
-          <button (click)="onReset()" class="btn btn-outline-success">Reset</button>
 
+    <section class="col-12 col-md-9">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4 gap-3">
+        <app-paging-header 
+          [totalCount]="totalCount" 
+          [pageNumber]="shopParams.pageNumber" 
+          [pageSize]="shopParams.pageSize">
+        </app-paging-header>
+
+        <div class="d-flex w-100 w-md-auto" style="max-width: 400px;">
+          <input (keyup.enter)="onSearch()" type="text" placeholder="Search products..." class="form-control me-2 shadow-sm" #search>
+          <button (click)="onSearch()" class="btn btn-primary px-3 shadow-sm">Search</button>
+          <button (click)="onReset()" class="btn btn-light ms-2 text-muted border">Reset</button>
         </div>
       </div>
-      <div class="row row-cols-3 g-3 mb-4">
-        @for (product of products; track product) {
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mb-5">
+        @for (product of products; track product.id) {
           <div class="col">
             <app-product-item [product]="product"></app-product-item>
           </div>
         }
       </div>
+
       @if (totalCount > 0) {
-        <div class="d-flex justify-content-center">
-          <app-pager
-            [totalCount]="totalCount"
-            [pageSize]="shopParams.pageSize"
-            [pageNumber]="shopParams.pageNumber"
-            (pageChanged) = "onPageChanged($event)"
-          ></app-pager>
+        <div class="d-flex justify-content-center mt-4">
+          <app-pager 
+            [totalCount]="totalCount" 
+            [pageSize]="shopParams.pageSize" 
+            [pageNumber]="shopParams.pageNumber" 
+            (pageChanged)="onPageChanged($event)">
+          </app-pager>
         </div>
       }
     </section>
