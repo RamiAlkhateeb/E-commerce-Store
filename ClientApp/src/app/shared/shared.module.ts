@@ -25,10 +25,10 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
-    PaginationModule.forRoot(), // As singleton
+    PaginationModule,
     ReactiveFormsModule,
     FormsModule,
-    BsDropdownModule.forRoot(),
+    BsDropdownModule,
     CdkStepperModule,
     RouterModule
   ],
