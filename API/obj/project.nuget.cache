@@ -65,15 +65,6 @@
   ],
   "logs": [
     {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file D:\\Work\\E-commerce-Store\\API\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "D:\\Work\\E-commerce-Store\\API\\API.csproj",
-      "warningLevel": 1,
-      "filePath": "D:\\Work\\E-commerce-Store\\API\\API.csproj",
-      "targetGraphs": []
-    },
-    {
       "code": "NU1510",
       "level": "Warning",
       "message": "PackageReference Microsoft.AspNetCore.Identity will not be pruned. Consider removing this package from your dependencies, as it is likely unnecessary.",

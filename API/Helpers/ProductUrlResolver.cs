@@ -16,6 +16,11 @@ namespace API.Helpers
         {
             if (!string.IsNullOrEmpty(source.Thumbnail))
             {
+                // IF it is already a full URL (PostImg, Cloudinary, etc.), just return it
+                if (source.Thumbnail.StartsWith("http"))
+                {
+                    return source.Thumbnail;
+                }
                 return _config["ApiUrl"] + source.Thumbnail;
             }
             return null;

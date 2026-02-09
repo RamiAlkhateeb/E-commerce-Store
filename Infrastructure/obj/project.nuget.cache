@@ -92,15 +92,5 @@
     "C:\\Users\\rami_\\.nuget\\packages\\system.security.cryptography.protecteddata\\9.0.0\\system.security.cryptography.protecteddata.9.0.0.nupkg.sha512",
     "C:\\Users\\rami_\\.nuget\\packages\\system.security.cryptography.xml\\8.0.2\\system.security.cryptography.xml.8.0.2.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "message": "Problem reading the cache file D:\\Work\\E-commerce-Store\\Infrastructure\\obj\\project.nuget.cache : '<' is an invalid start of a property name. Expected a '\"'. Path: $ | LineNumber: 2 | BytePositionInLine: 0.",
-      "projectPath": "D:\\Work\\E-commerce-Store\\Infrastructure\\Infrastructure.csproj",
-      "warningLevel": 1,
-      "filePath": "D:\\Work\\E-commerce-Store\\Infrastructure\\Infrastructure.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }
