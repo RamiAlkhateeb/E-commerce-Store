@@ -35,7 +35,7 @@ namespace API.Helpers
 
             var cacheKey= GenerateCacheKeyFromRequest(context.HttpContext.Request);
 
-            var cachedResponse = await cacheService.GetCachedResponseAsync(cacheKey);
+            var cachedResponse = await cacheService.GetCachedResponseAsync<string>(cacheKey);
 
             if (!string.IsNullOrEmpty(cachedResponse))
             {

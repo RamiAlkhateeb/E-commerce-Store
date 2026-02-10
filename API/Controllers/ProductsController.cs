@@ -16,12 +16,15 @@ namespace API.Controllers
     {
         private readonly IGenericRepository<Product> _genericRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<ProductsController> _logger;
 
         public ProductsController(IGenericRepository<Product> genericRepository,
-            IMapper mapper)
+            IMapper mapper,
+            ILogger<ProductsController> logger )
         {
             _genericRepository = genericRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         [Cached(600)]
@@ -29,6 +32,7 @@ namespace API.Controllers
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProducts(
             [FromQuery]ProductSpecParams productParams)
         {
+            _logger.LogInformation("Fetching 3D products");
             var spec = new ProductsWithImagesSpecification(productParams);
             var countSpec = new ProductWithFiltersForCountSpecification(productParams);
             var totalItems = await _genericRepository.CountAsync(countSpec);

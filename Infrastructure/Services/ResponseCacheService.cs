@@ -1,4 +1,5 @@
 ﻿using Core.Interfaces;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -11,33 +12,57 @@ namespace Infrastructure.Services
 {
     public class ResponseCacheService : IResponseCacheService
     {
-        private readonly IDatabase _database;
-        public ResponseCacheService(IConnectionMultiplexer redis)
+        private readonly IConnectionMultiplexer _redis;
+        private readonly ILogger<ResponseCacheService> _logger;
+        public ResponseCacheService(IConnectionMultiplexer redis,
+            ILogger<ResponseCacheService> logger)
         {
-            _database = redis.GetDatabase();
+            _redis = redis;
+            _logger = logger;
         }
-        public async Task CacheResponseAsync(string cacheKey, object response, TimeSpan timeToLive)
+        public async Task CacheResponseAsync<T>(string cacheKey, T response, TimeSpan timeToLive)
         {
-            if (response == null) return;
-
-            var options = new JsonSerializerOptions
+            try
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
+                if (!_redis.IsConnected) return;
 
-            var serialisedResponse = JsonSerializer.Serialize(response, options);
+                var db = _redis.GetDatabase();
+                var serialisedResponse = JsonSerializer.Serialize(response);
 
-            await _database.StringSetAsync(cacheKey, serialisedResponse, timeToLive);
+                await db.StringSetAsync(cacheKey, serialisedResponse, timeToLive);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to write to Redis: {ex.Message}");
+                // Ignores the write failure so the user still gets their data
+            }
 
         }
 
-        public async Task<string> GetCachedResponseAsync(string cacheKey)
+        public async Task<T> GetCachedResponseAsync<T>(string cacheKey)
         {
-            var cachedResponse = await _database.StringGetAsync(cacheKey);
+            try
+            {
+                // 1. Check if Redis is actually connected before trying
+                if (!_redis.IsConnected)
+                    return default;
 
-            if (cachedResponse.IsNullOrEmpty) return null;
+                var db = _redis.GetDatabase();
+                var cachedResponse = await db.StringGetAsync(cacheKey);
 
-            return cachedResponse;
+                if (cachedResponse.IsNullOrEmpty)
+                    return default;
+
+                return JsonSerializer.Deserialize<T>((string)cachedResponse);
+            }
+            catch (Exception ex)
+            {
+                // 2. LOG the error, but DO NOT crash.
+                _logger.LogError($"Redis is down or unreachable: {ex.Message}");
+
+                // 3. Return null so the app thinks "Cache Miss" and goes to the DB
+                return default;
+            }
         }
 
        
