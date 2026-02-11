@@ -33,7 +33,7 @@ namespace Infrastructure.Services
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Failed to write to Redis: {ex.Message}");
+                _logger.LogInformation($"Failed to write to Redis: {ex.Message}");
                 // Ignores the write failure so the user still gets their data
             }
 

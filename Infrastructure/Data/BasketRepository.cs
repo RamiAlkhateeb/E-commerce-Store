@@ -1,5 +1,8 @@
 ﻿using Core.Entities;
 using Core.Interfaces;
+using Infrastructure.Services;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -12,32 +15,78 @@ namespace Infrastructure.Data
 {
     public class BasketRepository : IBasketRepository
     {
-        private readonly IDatabase _database;
+        //private readonly IDatabase _database;
+        private readonly IConnectionMultiplexer _redis;
+        private readonly ILogger<ResponseCacheService> _logger;
+        private readonly IMemoryCache _memoryCache; // Local RAM Fallback
 
-        public BasketRepository(IConnectionMultiplexer redis)
+        public BasketRepository(IConnectionMultiplexer redis,
+            IMemoryCache memoryCache,
+            ILogger<ResponseCacheService> logger)
         {
-            _database = redis.GetDatabase();
+            _redis = redis;
+            //_database = redis.GetDatabase();
+            _logger = logger;
+            _memoryCache = memoryCache;
         }
 
         public async Task<bool> DeleteBasketAsync(string basketId)
         {
-            return await _database.KeyDeleteAsync(basketId);
+            try
+            {
+                if (_redis.IsConnected)
+                    return await _redis.GetDatabase().KeyDeleteAsync(basketId);
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Redis unreachable during Delete.");
+            }
+            _memoryCache.Remove(basketId);
+            return true;
         }
 
         public async Task<CustomerBasket> GetBasketAsync(string basketId)
         {
-            var data = await _database.StringGetAsync(basketId);
-            return data.IsNullOrEmpty ? null : JsonSerializer.Deserialize<CustomerBasket>((string)data);
+            try
+            {
+                if (_redis.IsConnected)
+                {
+                    var data = await _redis.GetDatabase().StringGetAsync(basketId);
+                    if (!data.IsNullOrEmpty)
+                        return JsonSerializer.Deserialize<CustomerBasket>((string)data!);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex, "Redis unreachable. Falling back to Memory Cache for Get.");
+            }
+            return _memoryCache.Get<CustomerBasket>(basketId);
+
         }
 
         public async Task<CustomerBasket> UpdateBasketAsync(CustomerBasket customerBasket)
         {
-            var created = await _database.StringSetAsync(customerBasket.Id, 
-                JsonSerializer.Serialize(customerBasket),TimeSpan.FromDays(15));
+            var expiry = TimeSpan.FromDays(15);
+            try
+            {
+                if (_redis.IsConnected)
+                {
+                    var json = JsonSerializer.Serialize(customerBasket);
+                    var created = await _redis.GetDatabase().StringSetAsync(customerBasket.Id, json, expiry);
+                    if (created) return await GetBasketAsync(customerBasket.Id);
+                }
 
-            if (!created) return null;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogInformation(ex, "Redis unreachable. Falling back to Memory Cache for Update.");
+               
+            }
 
-            return await GetBasketAsync(customerBasket.Id);
+            // Fallback to Local RAM
+            _memoryCache.Set(customerBasket.Id, customerBasket, expiry);
+            return customerBasket;
         }
     }
 }

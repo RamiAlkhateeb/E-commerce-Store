@@ -24,6 +24,9 @@ namespace API.Extensions
                 //opt.UseNpgsql(config.GetConnectionString("DefaultConnection"));
                 opt.UseSqlite(config.GetConnectionString("DefaultConnectionLocal"));
             });
+
+            services.AddMemoryCache();
+
             services.AddSingleton<IConnectionMultiplexer>(c =>
             {
                 var options = ConfigurationOptions.Parse(config.GetConnectionString("Redis"));
