@@ -73,6 +73,58 @@ namespace API.Controllers
 
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Product>> CreateProduct(ProductCreateDto productDto)
+        {
+            // 1. Map DTO to Entity (Manually or via AutoMapper)
+            var product = new Product
+            {
+                Title = productDto.Title,
+                Description = productDto.Description,
+                Price = productDto.Price,
+                Thumbnail = productDto.Thumbnail,
+                Stock = productDto.Stock,
+                Category = productDto.Category,
+                Brand = productDto.Brand,
+                IsActive = true,         // Default to Active
+                DiscountPercentage = 0,  // Default
+                Rating = 0               // Default
+            };
+
+            // 2. Add to DB
+            _genericRepository.Add(product);
+            // 3. Clear Cache (Important!)
+            //await _cacheService.RemoveCacheAsync("all_products_list");
+
+            // 4. Return the created product
+            return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteProduct(int id)
+        {
+            // 1. Find the product
+            var spec = new ProductsWithImagesSpecification(id);
+            var product = await _genericRepository.GetEntityWithSpec(spec);
+
+            if (product == null)
+                return NotFound();
+
+            // 2. SOFT DELETE Logic (Instead of removing it)
+            product.IsActive = false;
+
+            // 3. Update DB
+            // EF Core tracks the change, so we just save.
+            // If using a Repo pattern: _repo.Update(product);
+            _genericRepository.Update(product);
+
+            // 4. Clear Cache so the list updates immediately
+            //await _cacheService.RemoveCacheAsync("all_products_list");
+            //await _cacheService.RemoveCacheAsync($"product_{id}");
+
+            return NoContent(); // Standard 204 response
+        }
+
 
     }
 }

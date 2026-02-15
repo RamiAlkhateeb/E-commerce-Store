@@ -76,28 +76,36 @@ export class CheckoutPaymentComponent implements OnInit {
     && this.cardCvcComplete
   }
 
-  async submitOrder(){
-    this.loading = true
-    const basket = this.basketService.getCurrnetBasketValue()
-    if(!basket) throw new Error('cannot get basket')
-    try{
-      const createdOrder = await this.createOrder(basket) // createOrder will return promise
-      const paymentResult = await this.confirmPaymentWithStripe(basket)
-      if(paymentResult.paymentIntent){
-        this.basketService.deleteBasket(basket)
-        const navigationExtras : NavigationExtras = {state : createdOrder}
-        this.router.navigate(['checkout/success'] , navigationExtras)
-      }else{
-        this.toastr.error(paymentResult.error.message)
-      }
-    }catch(error : any){
-      console.log(error)
-      this.toastr.error(error.message)
-    } finally{
-      this.loading = false
-    }
-    
+  
+  async submitOrder() {
+  this.loading = true;
+  const basket = this.basketService.getCurrnetBasketValue();
+
+  if (!basket) {
+    this.toastr.error('Cannot get basket');
+    this.loading = false;
+    return;
   }
+
+  try {
+    // 1. Call the API to create order (Backend will handle WhatsApp)
+    const orderToCreate = this.getOrderToCreate(basket);
+    const createdOrder = await this.checkoutService.createOrder(orderToCreate).toPromise();
+
+    // 2. If successful, clear basket and redirect
+    this.basketService.deleteBasket(basket);
+    
+    const navigationExtras: NavigationExtras = { state: createdOrder };
+    this.router.navigate(['checkout/success'], navigationExtras);
+
+  } catch (error: any) {
+    console.log(error);
+    this.toastr.error(error.message || 'An error occurred while placing the order');
+  } finally {
+    this.loading = false;
+  }
+}
+
   private async confirmPaymentWithStripe(basket : Basket | null) {
     if (!basket) throw new Error('Basket is null')
     const result= this.stripe?.confirmCardPayment(basket.clientSecret! , {
@@ -125,7 +133,7 @@ export class CheckoutPaymentComponent implements OnInit {
     if(!deliveryMethodId || !shipToAddress) throw new Error('Problem with basket')
     return{
       basketId : basket.id,
-      deliveryMethodId: deliveryMethodId,
+      //deliveryMethodId: deliveryMethodId,
       shipToAddress: shipToAddress
 
     }

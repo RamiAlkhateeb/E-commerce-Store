@@ -1,15 +1,25 @@
-<div class="container mt-5">
-  <div><i class="fa fa-check-circle fa-5x" style="color: green;"></i></div>
-  <h2>Thank you. Your order is confirmed</h2>
-  <p class="mb-4">Your order has not shipped</p>
-  @if (order) {
-    <button
-      routerLink="/orders/{{order.id}}"
-    class="btn btn-outline-success">View your order</button>
-  }
-  @if (!order) {
-    <button
-      routerLink="/orders"
-    class="btn btn-outline-success">View your orders</button>
-  }
+<div class="container d-flex flex-column justify-content-center align-items-center min-vh-75 py-5">
+  
+  <div class="success-animation mb-4">
+    <div class="checkmark-circle">
+      <div class="background"></div>
+      <div class="checkmark draw"></div>
+    </div>
+  </div>
+  <h1 class="fw-bold mb-2 display-5">Order Confirmed!</h1>
+  <p class="text-muted text-center mb-5" style="max-width: 400px;">
+    Thank you for your purchase. We are prepping your 3D prints now. You will receive an email confirmation shortly.
+  </p>
+
+  <div class="d-flex gap-3">
+    @if (order) {
+      <button routerLink="/orders/{{order.id}}" class="btn btn-outline-dark rounded-pill px-4 py-2">
+        View Order #{{order.id}}
+      </button>
+    }
+    <button routerLink="/shop" class="btn btn-dark rounded-pill px-5 py-2 shadow">
+      Continue Shopping
+    </button>
+  </div>
+
 </div>

@@ -1,74 +1,50 @@
-@if ((basketService.basketSource$ | async); as basket) {
-  <div class="table-responsive">
-    <table class="table">
-      <thead class="text-uppercase" [class.bg-light]="isBasket">
-        <tr>
-          <th>
-            <div class="py-2">Product</div>
-          </th>
-          <th>
-            <div class="py-2">Price</div>
-          </th>
-          <th [class.text-center]="!isBasket">
-            <div class="py-2">Quantity</div>
-          </th>
-          <th>
-            <div class="py-2">Total</div>
-          </th>
-          @if (isBasket) {
-            <th>
-              <div class="py-2">Remove</div>
-            </th>
-          }
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of basket.items; track item) {
-          <tr>
-            <th>
-              <div class="p-2 d-inline-block">
-                <img src="{{item.pictureUrl}}" alt="{{item.productName}}" class="img-fluid"
-                  style="max-height: 50px;max-width: 50px;">
-                  <div class="ms-3 d-inline-block align-middle">
-                    <h5 class="mb-0">
-                      <a routerLink="/shop/{{item.id}}" class="text-dark text-decoration-none">
-                        {{item.productName}}
-                      </a>
-                      <!-- text-decoration-none so the link doesn't have an underline-->
-                    </h5>
-                    <span class="text-muted fst-italic">
-                      Category: {{item.type}}
-                    </span>
-                  </div>
-                </div>
-              </th>
-              <td class="align-middle"><strong>{{item.price | currency}}</strong></td>
-              <td class="align-middle">
-                <div class="d-flex align-items-center" [class.justify-content-center]="!isBasket">
-                  @if (isBasket) {
-                    <i class="fa fa-minus-circle text-warning mx-2"
-                      style="cursor: pointer;font-size: 2em;" (click)="removeBasketItem(item.id ,1)">
-                    </i>
-                  }
-                  <strong style="font-size: 1.2em;">{{item.quantity}}</strong>
-                  @if (isBasket) {
-                    <i class="fa fa-plus-circle text-warning mx-2"
-                    style="cursor: pointer;font-size: 2em;" (click)="addBasketItem(item)"></i>
-                  }
-                </div>
-              </td>
-              <td class="align-middle"><strong>{{item.price * item.quantity | currency}}</strong></td>
-              @if (isBasket) {
-                <td class="align-middle">
-                  <a class="text-danger">
-                    <i (click)="removeBasketItem(item.id, item.quantity)" class="fa fa-trash"
-                    style="font-size: 2em; cursor: pointer;"></i>
-                  </a>
-                </td>
-              }
-            </tr>
-          }
-        </tbody>
-      </table>
+<div class="d-flex flex-column gap-3">
+  
+  <div class="d-none d-md-flex justify-content-between text-muted small px-3">
+    <span style="width: 50%;">PRODUCT</span>
+    <span style="width: 20%;" class="text-center">QUANTITY</span>
+    <span style="width: 20%;" class="text-end">TOTAL</span>
+    <span style="width: 10%;"></span>
+  </div>
+
+  @for (item of (basketService.basketSource$ | async)?.items; track item.id) {
+    <div class="cart-item bg-white p-3 rounded-4 shadow-sm border-0 d-flex align-items-center">
+      
+      <div class="flex-shrink-0" style="width: 80px; height: 80px;">
+        <img src="{{item.pictureUrl}}" alt="{{item.productName}}" class="w-100 h-100 rounded-3 object-fit-cover">
+      </div>
+
+      <div class="flex-grow-1 ms-3">
+        <h6 class="fw-bold mb-1 text-truncate" style="max-width: 200px;">
+          <a routerLink="/shop/{{item.id}}" class="text-dark text-decoration-none">
+            {{item.productName}}
+          </a>
+        </h6>
+        <p class="text-muted small mb-0">{{item.brand}}</p>
+        <span class="d-md-none fw-bold text-primary">{{item.price | currency}}</span>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-between flex-grow-1 flex-md-grow-0 mt-3 mt-md-0 mobile-actions">
+        
+        <div class="quantity-control bg-light rounded-pill d-flex align-items-center px-2 py-1 me-md-5">
+          <button (click)="removeBasketItem(item.id, 1)" class="btn btn-link btn-sm text-dark p-0">
+            <i class="fa fa-minus small"></i>
+          </button>
+          <span class="fw-bold mx-2 small">{{item.quantity}}</span>
+          <button (click)="addBasketItem(item)" class="btn btn-link btn-sm text-dark p-0">
+            <i class="fa fa-plus small"></i>
+          </button>
+        </div>
+
+        <div class="d-none d-md-block text-end me-4 fw-bold" style="min-width: 80px;">
+          {{item.price * item.quantity | currency}}
+        </div>
+
+        <button (click)="removeBasketItem(item.id, item.quantity)" class="btn btn-link text-danger p-0 ms-3 ms-md-0">
+          <i class="fa fa-trash"></i>
+        </button>
+      </div>
+
     </div>
   }
+</div>

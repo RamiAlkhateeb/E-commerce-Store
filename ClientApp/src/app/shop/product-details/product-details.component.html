@@ -1,33 +1,71 @@
-<div class="container">
+<div class="container py-5">
   @if (product) {
-    <div class="row">
-      <div class="col-6">
-        <img src="{{images[0]}}" alt="{{product.title}}" class="w-100">
-      </div>
-      <div class="col-6 mt-5">
-        <h2>{{product.title}}</h2>
-        <p style="font-size: 2em;">{{product.price | currency}}</p>
-        @if (quantityInBasket > 0) {
-          <h5 class="text-primary mb-3">
-            You have {{quantityInBasket}} of this product in your basket
-          </h5>
-        }
-        <div class="d-flex justify-content-start align-items-center">
-          <i (click)="decrementQuantity()"
-            class="fa fa-minus-circle text-warning me-2"
-          style="cursor: pointer;font-size: 2em;"></i>
-          <span class="font-weight-bold" style="font-size: 1.5em;">{{quantity}}</span>
-          <i (click)="incrementQuantity()"
-            class="fa fa-plus-circle text-warning ms-2"
-          style="cursor: pointer;font-size: 2em;"></i>
-          <button
-            class="btn btn-outline-primary ms-4"
-            (click)="updateBasket()"
-          [disabled]="quantity === quantityInBasket">{{buttonText}}</button>
+    <div class="row g-5">
+      
+      <div class="col-12 col-md-7">
+        <div class="main-image rounded-4 overflow-hidden shadow-sm bg-light mb-3">
+           <img src="{{images[0] || product.thumbnail}}" alt="{{product.title}}" class="w-100 object-fit-cover" style="max-height: 600px;">
         </div>
-        <div class="row mt-4">
-          <h4>Description</h4>
-          <p>{{product.description}}</p>
+        
+        <div class="row g-2">
+           @for (img of images; track img) {
+             <div class="col-3">
+               <img src="{{img}}" class="img-fluid rounded-3 cursor-pointer border hover-border-dark">
+             </div>
+           }
+        </div>
+      </div>
+
+      <div class="col-12 col-md-5">
+        <div class="sticky-top" style="top: 20px; z-index: 1;">
+          
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <div>
+              <h1 class="fw-bold display-6 mb-1">{{product.title}}</h1>
+              <p class="text-muted">{{product.brand}}</p>
+            </div>
+            <h2 class="fw-bold text-primary">{{product.price | currency}}</h2>
+          </div>
+          
+          <hr class="my-4 text-muted opacity-25">
+
+          <p class="lead mb-4" style="font-size: 1.1rem; line-height: 1.6;">
+            {{product.description}}
+          </p>
+
+          <div class="card border-0 bg-light rounded-4 p-4 mt-4">
+            
+            @if (quantityInBasket > 0) {
+              <div class="alert alert-info py-2 px-3 mb-3 border-0 rounded-3 text-center">
+                <small class="fw-bold">Currently in basket: {{quantityInBasket}}</small>
+              </div>
+            }
+
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="d-flex align-items-center bg-white rounded-pill border px-2 py-1">
+                <button (click)="decrementQuantity()" class="btn btn-link text-dark text-decoration-none p-2">
+                  <i class="fa fa-minus"></i>
+                </button>
+                <span class="fw-bold px-3" style="min-width: 40px; text-align: center;">{{quantity}}</span>
+                <button (click)="incrementQuantity()" class="btn btn-link text-dark text-decoration-none p-2">
+                  <i class="fa fa-plus"></i>
+                </button>
+              </div>
+
+              <button 
+                (click)="updateBasket()" 
+                [disabled]="quantity === quantityInBasket"
+                class="btn btn-dark btn-lg rounded-pill px-5 flex-grow-1 ms-3">
+                {{buttonText}}
+              </button>
+            </div>
+          </div>
+
+          <div class="d-flex gap-4 mt-4 text-muted small justify-content-center">
+            <span><i class="fa fa-shield me-1"></i> Secure Payment</span>
+            <span><i class="fa fa-truck me-1"></i> Fast Shipping</span>
+          </div>
+
         </div>
       </div>
     </div>

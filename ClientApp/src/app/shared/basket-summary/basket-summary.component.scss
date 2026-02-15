@@ -1,0 +1,40 @@
+/* Base Card Style */
+.cart-item {
+  transition: transform 0.2s ease;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-2px); /* Slight lift on hover */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05) !important;
+  }
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+/* MOBILE ADJUSTMENTS (Screens smaller than 768px) */
+@media (max-width: 768px) {
+  .cart-item {
+    flex-wrap: wrap; /* Allow items to wrap to next line */
+  }
+
+  /* Force the controls to drop below the image/title on very small screens */
+  .mobile-actions {
+    width: 100%;
+    margin-top: 15px; /* Add spacing when it wraps */
+    justify-content: space-between;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+  }
+
+  /* Make quantity buttons larger on mobile for easier tapping */
+  .quantity-control {
+    padding: 5px 10px !important;
+    
+    button {
+      font-size: 1.2rem;
+      padding: 0 10px !important;
+    }
+  }
+}

@@ -2,7 +2,7 @@ import { Address } from "./user";
 
 export interface OrderToCreate{
     basketId:string
-    deliveryMethodId : number
+    //deliveryMethodId? : number
     shipToAddress: Address
 }
 

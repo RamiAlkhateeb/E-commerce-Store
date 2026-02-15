@@ -1,23 +1,66 @@
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-8">
-            <app-stepper  #appStepper>
-                <cdk-step [label]="'Address'" [completed]="checkoutForm.get('addressForm')?.valid">
-                    <app-checkout-address [checkoutForm]="checkoutForm"></app-checkout-address>
-                </cdk-step>
-                <cdk-step [label]="'Delivery'"  [completed]="checkoutForm.get('deliveryForm')?.valid">
-                    <app-checkout-delivery [checkoutForm]="checkoutForm"></app-checkout-delivery>
-                </cdk-step>
-                <cdk-step [label]="'Review'">
-                    <app-checkout-review [appStepper]="appStepper"></app-checkout-review>
-                </cdk-step>
-                <cdk-step [label]="'Payment'" [completed]="checkoutForm.get('paymentForm')?.valid">
-                    <app-checkout-payment [checkoutForm]="checkoutForm"></app-checkout-payment>
-                </cdk-step>
-            </app-stepper>
+<div class="container py-5">
+  
+  <a routerLink="/basket" class="text-decoration-none text-muted mb-4 d-inline-block">
+    <i class="fa fa-arrow-left me-2"></i>Back to basket
+  </a>
+
+  <div class="row g-5">
+    
+    <div class="col-12 col-lg-7">
+      <h2 class="fw-bold mb-4">Shipping Details</h2>
+      
+      <form [formGroup]="checkoutForm" id="paymentForm">
+        
+        <div formGroupName="addressForm" class="row g-3">
+          <div class="col-md-6">
+            <app-text-input [label]="'First Name'" formControlName="firstName"></app-text-input>
+          </div>
+          <div class="col-md-6">
+            <app-text-input [label]="'Last Name'" formControlName="lastName"></app-text-input>
+          </div>
+
+
+          <div class="col-12">
+            <app-text-input [label]="'Street Address'" formControlName="street"></app-text-input>
+          </div>
+
+          <div class="col-md-6">
+            <app-text-input [label]="'City'" formControlName="city"></app-text-input>
+          </div>
+          <div class="col-md-6">
+            <app-text-input [label]="'Phone Number'" formControlName="phoneNumber"></app-text-input>
+          </div>
+          <div class="col-md-6">
+            <app-text-input [label]="'Country'" formControlName="country"></app-text-input>
+          </div>
         </div>
-        <div class="col-4">
-            <app-order-totals></app-order-totals>
-        </div>
+
+      </form>
     </div>
+
+    <div class="col-12 col-lg-5">
+      <div class="bg-light rounded-4 p-4 p-md-5 h-100">
+        <h4 class="fw-bold mb-4">Your Order</h4>
+        
+        <app-order-totals></app-order-totals>
+
+        <div class="d-flex justify-content-between align-items-center py-3 border-top border-bottom my-3">
+          <span class="text-muted">Delivery</span>
+          <span class="fw-bold">Free Standard Shipping</span>
+        </div>
+
+        <button 
+          (click)="submitOrder()" 
+          [disabled]="checkoutForm.invalid || loading" 
+          class="btn btn-dark w-100 py-3 rounded-pill fw-bold shadow-lg mt-4 d-flex justify-content-center align-items-center">
+          
+          <i *ngIf="loading" class="fa fa-spinner fa-spin me-2"></i>
+          
+          Confirm Order
+        </button>
+
+      </div>
+    </div>
+
+  </div>
 </div>

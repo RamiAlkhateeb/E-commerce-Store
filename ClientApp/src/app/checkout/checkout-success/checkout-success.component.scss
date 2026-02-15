@@ -1,0 +1,28 @@
+.min-vh-75 { min-height: 75vh; }
+
+/* Simple Clean Checkmark styling */
+.success-animation { margin: 20px auto; }
+
+.checkmark-circle {
+  width: 100px;
+  height: 100px;
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  border-radius: 50%;
+  background-color: #d4edda; /* Light Green Background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  .checkmark {
+      /* Create the check shape using borders */
+      display: inline-block;
+      width: 25px;
+      height: 45px;
+      border: solid #155724; /* Dark Green Check */
+      border-width: 0 5px 5px 0;
+      transform: rotate(45deg);
+      margin-top: -10px;
+  }
+}

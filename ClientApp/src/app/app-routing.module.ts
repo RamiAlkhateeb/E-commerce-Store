@@ -9,6 +9,7 @@ import { ServerErrorComponent } from './core/server-error/server-error.component
 import { ProfileComponent } from './profile/profile.component';
 import { ShopModule } from './shop/shop.module';
 import { OrderModule } from './order/order.module';
+import { ShopComponent } from './shop/shop.component';
 
 const routes: Routes = [
   { path: 'shop', loadChildren: () => import('./shop/shop.module').then(m => ShopModule) },
@@ -23,7 +24,7 @@ const routes: Routes = [
     canActivate : [canActivate],
     loadChildren: () => import('./checkout/checkout.module').then(m => CheckoutModule)
   },
-  { path: '', component: ProfileComponent },
+  { path: '', component: ShopComponent, pathMatch: 'full' },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }
