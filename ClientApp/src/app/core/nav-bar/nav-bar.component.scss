@@ -23,3 +23,33 @@ a {
 .logo {
     cursor: pointer;
 }
+
+.navbar {
+  backdrop-filter: blur(10px); /* Modern frosted glass effect */
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-brand {
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.hover-opacity {
+  transition: opacity 0.2s;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.badge {
+  /* Style the cart count bubble to be small and clean */
+  padding: 0.35em 0.5em;
+  line-height: 1;
+}
+
+/* Ensure icons align perfectly with text */
+.fa {
+  vertical-align: middle;
+}

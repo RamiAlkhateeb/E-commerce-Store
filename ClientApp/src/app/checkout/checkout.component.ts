@@ -27,8 +27,8 @@ export class CheckoutComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.getAddressFormValues()
-    this.getDeliveryMethodValue()
+    //this.getAddressFormValues()
+    //this.getDeliveryMethodValue()
   }
 
   checkoutForm = this.fb.group({
