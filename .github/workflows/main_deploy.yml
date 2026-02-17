@@ -27,6 +27,6 @@ jobs:
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'your-web-app-name-here' # <--- CHANGE THIS
+        app-name: 'app-store-api' # <--- CHANGE THIS
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         images: '${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/shop-api:latest'
