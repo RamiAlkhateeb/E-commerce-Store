@@ -5,6 +5,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -73,6 +74,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Product>> CreateProduct(ProductCreateDto productDto)
         {
@@ -100,6 +102,7 @@ namespace API.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = product.Id }, product);
         }
 
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteProduct(int id)
         {
@@ -112,6 +115,39 @@ namespace API.Controllers
 
             // 2. SOFT DELETE Logic (Instead of removing it)
             product.IsActive = false;
+
+            // 3. Update DB
+            // EF Core tracks the change, so we just save.
+            // If using a Repo pattern: _repo.Update(product);
+            _genericRepository.Update(product);
+
+            // 4. Clear Cache so the list updates immediately
+            //await _cacheService.RemoveCacheAsync("all_products_list");
+            //await _cacheService.RemoveCacheAsync($"product_{id}");
+
+            return NoContent(); // Standard 204 response
+        }
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public async Task<ActionResult> UpdateProduct(int id, ProductCreateDto productDto)
+        {
+            // 1. Find the product
+            var spec = new ProductsWithImagesSpecification(id);
+            var product = await _genericRepository.GetEntityWithSpec(spec);
+
+            if (product == null)
+                return NotFound();
+
+            // 2. Update properties on the EXISTING tracked entity
+            // DO NOT use 'new Product { ... }'
+            product.Title = productDto.Title;
+            product.Description = productDto.Description;
+            product.Price = productDto.Price;
+            product.Thumbnail = productDto.Thumbnail;
+            product.Stock = productDto.Stock;
+            product.Category = productDto.Category;
+            product.Brand = productDto.Brand;
 
             // 3. Update DB
             // EF Core tracks the change, so we just save.

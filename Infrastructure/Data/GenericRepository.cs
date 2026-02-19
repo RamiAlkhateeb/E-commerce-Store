@@ -42,17 +42,21 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEnt
     public void Add(TEntity entity)
     {
         _context.Set<TEntity>().Add(entity);
+        _context.SaveChanges();
     }
 
     public void Update(TEntity entity)
     {
         _context.Set<TEntity>().Attach(entity);
         _context.Entry(entity).State= EntityState.Modified;
+        _context.SaveChanges();
     }
 
     public void Delete(TEntity entity)
     {
         _context.Set<TEntity>().Remove(entity);
+        _context.SaveChanges();
+
     }
 }
 
