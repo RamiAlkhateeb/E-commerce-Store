@@ -38,33 +38,25 @@ export class CheckoutComponent implements OnInit {
       street: ['', Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      phoneNumber: ['', Validators.required],
-
-
-    }),
-    deliveryForm: this.fb.group({
-      deliveryMethod: ['', Validators.required]
-    }),
-    paymentForm: this.fb.group({
-      nameOnCard: ['', Validators.required]
+      phoneNumber: ['', [Validators.required, Validators.pattern(/^\+?\d{10,15}$/)]],
     })
   })
 
-  getAddressFormValues() {
-    this.accountService.getUserAddress().subscribe({
-      next: address => {
-        address && this.checkoutForm.get('addressForm')?.patchValue(address)
-      }
-    })
-  }
+  // getAddressFormValues() {
+  //   this.accountService.getUserAddress().subscribe({
+  //     next: address => {
+  //       address && this.checkoutForm.get('addressForm')?.patchValue(address)
+  //     }
+  //   })
+  // }
 
-  getDeliveryMethodValue() {
-    const basket = this.basketService.getCurrnetBasketValue()
-    if (basket && basket.deliveryMethodId) {
-      this.checkoutForm.get('deliveryForm')?.get('deliveryMethod')
-        ?.patchValue(basket.deliveryMethodId.toString())
-    }
-  }
+  // getDeliveryMethodValue() {
+  //   const basket = this.basketService.getCurrnetBasketValue()
+  //   if (basket && basket.deliveryMethodId) {
+  //     this.checkoutForm.get('deliveryForm')?.get('deliveryMethod')
+  //       ?.patchValue(basket.deliveryMethodId.toString())
+  //   }
+  // }
 
   async submitOrder() {
     this.loading = true;
@@ -97,9 +89,8 @@ export class CheckoutComponent implements OnInit {
 
   private getOrderToCreate(basket: Basket): OrderToCreate {
     const formValues = this.checkoutForm.get('addressForm')?.value;
-
+    
     if (!formValues) throw new Error('Address form is missing');
-
     return {
       basketId: basket.id,
       shipToAddress: {
@@ -108,8 +99,10 @@ export class CheckoutComponent implements OnInit {
         street: formValues.street || "",
         city: formValues.city || "",
         country: formValues.country || "",
-        phoneNumber: formValues.phoneNumber || ""
-      }
+        zipCode: formValues.phoneNumber || ""
+      },
+      deliveryMethodId: 1, // Dummy value
+      //nameOnCard: 'Dummy Name' // Dummy value
     };
   }
 }

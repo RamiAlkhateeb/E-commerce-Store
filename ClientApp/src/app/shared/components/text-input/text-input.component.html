@@ -18,7 +18,9 @@
       <div class="invalid-feedback">Invalid email</div>
     }
     @if (control.errors?.['pattern']) {
-      <div class="invalid-feedback">Password not complex enough</div>
+      <div class="invalid-feedback">
+        {{ label === 'Phone Number' ? 'Invalid phone number format' : 'Password not complex enough' }}
+      </div>
     }
     @if (control.errors?.['emailExists']) {
       <div class="invalid-feedback">Email address is taken</div>

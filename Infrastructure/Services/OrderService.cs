@@ -42,32 +42,35 @@ namespace Infrastructure.Services
                 items.Add(orderItem);
             }
             // get delivery method from repo
-            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(deliveryMethodId);
+            var deliveryMethod = await _unitOfWork.Repository<DeliveryMethod>().GetByIdAsync(1);//GetByIdAsync(deliveryMethodId)
             // calc subtotal
             var subtotal = items.Sum(item => item.Price * item.Quantity);
 
             // check to see if order exists
-            var order = await GetOrderByPaymentIntentIdAsync(basket.PaymentIntentId);
+            //var order = await GetOrderByPaymentIntentIdAsync(basket.PaymentIntentId);
+            var order = new Order(items, buyerEmail, shippingAddress, deliveryMethod
+                    , subtotal, "basket.PaymentIntentId");
+            _unitOfWork.Repository<Order>().Add(order);
 
-            if (order != null)
-            {
-                order.ShipToAddress = shippingAddress;
-                order.DeliveryMethod = deliveryMethod;
-                order.Subtotal = subtotal;
-                _unitOfWork.Repository<Order>().Update(order);
-            }
-            else
-            {
-                // create order
-                order = new Order(items, buyerEmail, shippingAddress, deliveryMethod
-                    , subtotal, basket.PaymentIntentId);
-                _unitOfWork.Repository<Order>().Add(order);
-            }
+            //if (order != null)
+            //{
+            //    order.ShipToAddress = shippingAddress;
+            //    order.DeliveryMethod = deliveryMethod;
+            //    order.Subtotal = subtotal;
+            //    _unitOfWork.Repository<Order>().Update(order);
+            //}
+            //else
+            //{
+            //    // create order
+            //    order = new Order(items, buyerEmail, shippingAddress, deliveryMethod
+            //        , subtotal, basket.PaymentIntentId);
+            //    _unitOfWork.Repository<Order>().Add(order);
+            //}
 
             // save to db
 
             var result = await _unitOfWork.Complete();
-            if (result <= 0) return null;
+            if (result <= 0) return order; // should be return null
             // delete basket
             // will call this from client side
             //await _basketRepo.DeleteBasketAsync(basketId);
