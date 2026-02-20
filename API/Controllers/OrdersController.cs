@@ -4,6 +4,7 @@ using API.Extensions;
 using AutoMapper;
 using Core.Entities.OrderAggregate;
 using Core.Interfaces;
+using Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -15,7 +16,6 @@ namespace API.Controllers
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
-        private readonly API.Services.EmailService _emailService = new API.Services.EmailService();
         public OrdersController(IOrderService orderService,
             IMapper mapper)
         {
@@ -35,17 +35,6 @@ namespace API.Controllers
 
             if (order == null) return BadRequest(new ApiResponse(400, "Problem creating order") );
 
-            // Send email to admin
-            var adminEmail = "rami13195@gmail.com";
-            var subject = $"New Order #{order.Id}";
-            var body = $"Order Details:\n" +
-                $"Buyer: {order.BuyerEmail}\n" +
-                $"Date: {order.OrderDate}\n" +
-                $"Address: {order.ShipToAddress.Street}, {order.ShipToAddress.City}, {order.ShipToAddress.Country}, {order.ShipToAddress.ZipCode}\n" +
-                $"Items:\n" +
-                string.Join("\n", order.OrderItems.Select(i => $"- {i.ItemOrdered.ProductName} x{i.Quantity} @ {i.Price}")) +
-                $"\nSubtotal: {order.Subtotal}\nTotal: {order.GetTotal()}";
-            await _emailService.SendOrderEmailAsync(adminEmail, subject, body);
 
             return Ok(order);
         }
@@ -56,6 +45,14 @@ namespace API.Controllers
         {
             var email = HttpContext.User.RetrieveEmailFromPrincipal();
             var orders = await _orderService.GetOrdersForUserAsync(email);
+            return Ok(_mapper.Map<IReadOnlyList<OrderToReturnDto>>(orders));
+        }
+
+        [Authorize]
+        [HttpGet("all")]
+        public async Task<ActionResult<IReadOnlyList<OrderToReturnDto>>> GetAllOrders()
+        {
+            var orders = await _orderService.GetAllOrdersAsync();
             return Ok(_mapper.Map<IReadOnlyList<OrderToReturnDto>>(orders));
         }
 
@@ -73,6 +70,14 @@ namespace API.Controllers
         public async Task<ActionResult<IReadOnlyList<DeliveryMethod>>> GetDeliveryMethods()
         {
             return Ok(await _orderService.GetDeliveryMethodsAsync());
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteOrder(int id)
+        {
+            // 1. Get the order using the Generic Repository
+            await _orderService.DeleteOrderAsync(id);
+            return Ok();
         }
     }
 }

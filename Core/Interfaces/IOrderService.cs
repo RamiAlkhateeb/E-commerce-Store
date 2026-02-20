@@ -11,7 +11,11 @@ namespace Core.Interfaces
             Address shippingAddress);
 
         Task<IReadOnlyList<Order>> GetOrdersForUserAsync(string buyerEmail);
+        Task<IReadOnlyList<Order>> GetAllOrdersAsync();
+
         Task<Order> GetOrderByIdAsync(int id, string buyerEmail);
         Task<IReadOnlyList<DeliveryMethod>> GetDeliveryMethodsAsync();
+
+        Task <string> DeleteOrderAsync(int id);
     }
 }

@@ -103,5 +103,33 @@ namespace Infrastructure.Services
             var spec = new OrderByPaymentIntentIdSpecification(paymentIntentId);
             return await _unitOfWork.Repository<Order>().GetEntityWithSpec(spec);
         }
+
+        public async Task<IReadOnlyList<Order>> GetAllOrdersAsync()
+        {
+            // Notice we use the empty constructor we just made
+            var spec = new OrdersWithItemsSpecification();
+
+            // 2. Ask Unit of Work for the Order repository, and pass the spec to it
+            var orders = await _unitOfWork.Repository<Order>().ListAsync(spec);
+
+            // 3. Return the fully populated orders
+            return orders;
+        }
+
+        public async Task<string> DeleteOrderAsync(int id)
+        {
+            var order = await _unitOfWork.Repository<Order>().GetByIdAsync(id);
+
+            if (order == null) return "Not Found";
+
+            // 2. Tell the repository to track this as "Deleted"
+            _unitOfWork.Repository<Order>().Delete(order);
+
+            // 3. Save changes to the database
+            var result = await _unitOfWork.Complete();
+
+            if (result <= 0) return "0";
+             return "Deleted";
+        }
     }
 }
