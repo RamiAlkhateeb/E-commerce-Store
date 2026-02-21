@@ -57,6 +57,9 @@ app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.UseDefaultFiles(); // Tells .NET to look for index.html
+
+
 app.MapControllers();
 app.MapFallbackToController("Index","Fallback");
 using var scope = app.Services.CreateScope();

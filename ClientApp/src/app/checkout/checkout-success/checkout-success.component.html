@@ -1,25 +1,37 @@
-<div class="container d-flex flex-column justify-content-center align-items-center min-vh-75 py-5">
-  
-  <div class="success-animation mb-4">
-    <div class="checkmark-circle">
-      <div class="background"></div>
-      <div class="checkmark draw"></div>
+<div class="container mt-5 pt-5 mb-5">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      
+      <div class="card border-0 shadow-sm rounded-4 p-5 text-center bg-white">
+        
+        <i class="fa fa-check-circle text-success mb-4" style="font-size: 5rem;"></i>
+        
+        <h2 class="fw-bold mb-3" style="letter-spacing: -0.5px;">Order Received!</h2>
+        
+        <p class="text-muted fs-5 mb-4 px-md-3">
+          Thank you for your purchase. We have securely received your request, and the team at <strong>oussm.prints</strong> will contact you shortly to confirm production and delivery details.
+        </p>
+        
+        @if (order) {
+          <div class="bg-light rounded-3 py-3 mb-4 mx-auto" style="max-width: 300px;">
+            <p class="mb-0 text-muted small fw-bold">ORDER NUMBER</p>
+            <p class="mb-0 fs-5 fw-bold">#{{order.id}}</p>
+          </div>
+        } @else {
+          <p class="mb-4 fw-semibold text-muted">Your order has been logged successfully.</p>
+        }
+
+        <div class="d-flex flex-column flex-sm-row justify-content-center gap-3 mt-2">
+          <button routerLink="/orders" class="btn btn-outline-dark rounded-pill px-4 py-3 fw-semibold">
+            View My Orders
+          </button>
+          <button routerLink="/" class="btn btn-dark rounded-pill px-5 py-3 fw-bold shadow-sm">
+            Back to Shop
+          </button>
+        </div>
+
+      </div>
+
     </div>
   </div>
-  <h1 class="fw-bold mb-2 display-5">Order Confirmed!</h1>
-  <p class="text-muted text-center mb-5" style="max-width: 400px;">
-    Thank you for your purchase. We are prepping your 3D prints now. You will receive an email confirmation shortly.
-  </p>
-
-  <div class="d-flex gap-3">
-    @if (order) {
-      <button routerLink="/orders/{{order.id}}" class="btn btn-outline-dark rounded-pill px-4 py-2">
-        View Order #{{order.id}}
-      </button>
-    }
-    <button routerLink="/shop" class="btn btn-dark rounded-pill px-5 py-2 shadow">
-      Continue Shopping
-    </button>
-  </div>
-
 </div>
