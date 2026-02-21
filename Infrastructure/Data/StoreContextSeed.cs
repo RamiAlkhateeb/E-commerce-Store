@@ -22,6 +22,11 @@ namespace Infrastructure.Data
             {
                 var deliveryData = File.ReadAllText(path + @"/Data/SeedData/delivery.json");
                 var methods = JsonSerializer.Deserialize<List<DeliveryMethod>>(deliveryData);
+                // ADD THIS LOOP:
+                foreach (var item in methods)
+                {
+                    item.Id = 0; // Tells SQL Server to generate the ID automatically!
+                }
                 context.DeliveryMethods.AddRange(methods);
             }
 
