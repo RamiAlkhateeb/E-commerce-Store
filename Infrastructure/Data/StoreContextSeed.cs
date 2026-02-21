@@ -16,19 +16,7 @@ namespace Infrastructure.Data
         public static async Task SeedData(StoreDatabaseContext context)
         {
             var path=Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);   
-            if(!context.Products.Any())
-            {
-                var productsData = File.ReadAllText(path + @"/Data/SeedData/products.json");
-                var products = JsonSerializer.Deserialize<List<Product>>(productsData);
-                context.Products.AddRange(products);
-            }
-
-            if (!context.ProductImages.Any())
-            {
-                var Data = File.ReadAllText(path + @"/Data/SeedData/productsImages.json");
-                var productsImges = JsonSerializer.Deserialize<List<ProductImage>>(Data);
-                context.ProductImages.AddRange(productsImges);
-            }
+            
 
             if (!context.DeliveryMethods.Any())
             {
