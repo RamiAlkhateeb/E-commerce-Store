@@ -34,7 +34,7 @@ RUN dotnet publish "API.csproj" -c Release -o /app/out
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 
-COPY --from=build /app/out .
+COPY --from=build-backend /app/out .
 
 # Magic Step: Copy the Angular build from Stage 1 into the .NET wwwroot folder
 # *NOTE: adjust 'client' below if your angular app folder is named differently*
