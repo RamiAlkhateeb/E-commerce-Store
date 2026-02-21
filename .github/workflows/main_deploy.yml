@@ -3,7 +3,7 @@ name: Build and deploy container app
 on:
   push:
     branches:
-      - main  # Or your branch name
+      - mmaster  # Or your branch name
 
 jobs:
   build-and-deploy:
