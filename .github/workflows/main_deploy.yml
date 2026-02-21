@@ -12,21 +12,23 @@ jobs:
     - name: 'Checkout GitHub Action'
       uses: actions/checkout@v4
 
-    - name: 'Login to Azure Container Registry'
-      uses: azure/docker-login@v1
+    # 1. Login to Docker Hub instead of ACR
+    - name: 'Login to Docker Hub'
+      uses: docker/login-action@v3
       with:
-        login-server: ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}
-        username: ${{ secrets.AZURE_REGISTRY_USERNAME }}
-        password: ${{ secrets.AZURE_REGISTRY_PASSWORD }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+    # 2. Build and push to your Docker Hub repository
     - name: 'Build and push image'
       run: |
-        docker build . -t ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/shop-api:latest
-        docker push ${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/shop-api:latest
+        docker build . -t ${{ secrets.DOCKERHUB_USERNAME }}/shop-api:latest
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/shop-api:latest
 
+    # 3. Deploy to Azure Web App using the Docker Hub image
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'app-store-api' # <--- CHANGE THIS
+        app-name: 'app-store-api'
         publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-        images: '${{ secrets.AZURE_REGISTRY_LOGIN_SERVER }}/shop-api:latest'
+        images: '${{ secrets.DOCKERHUB_USERNAME }}/shop-api:latest'
